@@ -81,7 +81,9 @@ def main() -> int:
 
 
 def _is_latin(char: str) -> bool:
-    return char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" or 0xC0 <= ord(char) <= 0x24F
+    """Latin-1 Supplement through Latin Extended-B, so an accented title is fine
+    but Cyrillic and Greek lookalikes are not."""
+    return 0xC0 <= ord(char) <= 0x24F
 
 
 if __name__ == "__main__":
