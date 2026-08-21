@@ -27,18 +27,26 @@ jobs:
       - uses: actions/checkout@v4
       # LeetCode solutions are class bodies that only build against the site's
       # own harness, so only the two stdin/stdout platforms are compiled here.
+      #
+      # Solutions are syntax-checked, which is proportionate for 320 files of
+      # plain code. Templates get a real -c compile: pragma failures surface
+      # during inlining, and -fsyntax-only does not run that pass, so a template
+      # that cannot possibly build on the judge would otherwise pass here.
       - name: Compile every standalone solution
         run: |
           fail=0
-          check() {
-            "$1" "$2" -fsyntax-only "$3" 2>/tmp/err || {
-              echo "::error file=$3::does not compile"
+          run() {
+            src="$1"; shift
+            "$@" "$src" 2>/tmp/err || {
+              echo "::error file=$src::does not compile"
               sed 's/^/    /' /tmp/err
               fail=1
             }
           }
-          while IFS= read -r src; do check g++ -std=c++17 "$src"; done \
-            < <(find CodeForces HackerRank templates -name '*.cpp')
-          while IFS= read -r src; do check gcc -std=c11 "$src"; done \
+          while IFS= read -r src; do run "$src" g++ -std=c++17 -fsyntax-only; done \
+            < <(find CodeForces HackerRank -name '*.cpp')
+          while IFS= read -r src; do run "$src" gcc -std=c11 -fsyntax-only; done \
             < <(find CodeForces HackerRank -name '*.c')
+          while IFS= read -r src; do run "$src" g++ -std=c++17 -O2 -c -o /dev/null; done \
+            < <(find templates -name '*.cpp')
           exit $fail
