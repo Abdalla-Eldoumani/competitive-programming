@@ -1,0 +1,65 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # build_index.py reads the full history to date each problem.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check problem layout
+        run: python tools/check_repo.py
+      - name: Check the index is up to date
+        run: python tools/build_index.py --check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile every standalone solution
+        run: |
+          # 316 of the 320 solutions open with <bits/stdc++.h>, and parsing it
+          # is essentially the whole cost of this job. Precompiling it once
+          # takes about six seconds and cuts each file from ~1.3s to ~0.4s.
+          # With that plus one job per core this runs in well under a minute
+          # instead of five.
+          export PCH
+          PCH=$(mktemp -d)
+          header=$(echo '#include <bits/stdc++.h>' | g++ -std=c++17 -E -x c++ - \
+                   | grep -m1 -o '/usr/include[^"]*bits/stdc++\.h')
+          mkdir -p "$PCH/bits"
+          cp "$header" "$PCH/bits/"
+          g++ -std=c++17 -x c++-header "$PCH/bits/stdc++.h" -o "$PCH/bits/stdc++.h.gch"
+
+          compile() {
+            local out
+            if ! out=$("$@" 2>&1); then
+              printf '::error file=%s::does not compile\n%s\n' "${!#}" "$out"
+              return 1
+            fi
+          }
+          export -f compile
+
+          fail=0
+          # LeetCode solutions are class bodies that only build against the
+          # site's own harness, so they are not swept.
+          find CodeForces HackerRank -name '*.cpp' -print0 | xargs -0 -P "$(nproc)" -I{} \
+            bash -c 'compile g++ -std=c++17 -I "$PCH" -fsyntax-only "$1"' _ {} || fail=1
+          find CodeForces HackerRank -name '*.c' -print0 | xargs -0 -P "$(nproc)" -I{} \
+            bash -c 'compile gcc -std=c11 -fsyntax-only "$1"' _ {} || fail=1
+          # Templates get a real -c compile: pragma errors surface during
+          # inlining, which -fsyntax-only skips entirely. No PCH here, the
+          # pragmas would invalidate it.
+          find templates -name '*.cpp' -print0 | xargs -0 -P "$(nproc)" -I{} \
+            bash -c 'compile g++ -std=c++17 -O2 -c -o /dev/null "$1"' _ {} || fail=1
+
+          exit $fail

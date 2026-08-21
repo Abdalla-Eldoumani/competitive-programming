@@ -5,13 +5,15 @@
 #include <algorithm>
 using namespace std;
 
-// Was:
-bool is_smart_number(int num) {
-    int val = (int) sqrt(num);
-    if(num / val == 1) // Doesn't check if a number is smart correctly
-        return true;
-    return false;
-}
+// The version the problem ships with. num / val == 1 is true for any num below
+// 2 * val, so it reports plenty of non-squares as smart.
+//
+// bool is_smart_number(int num) {
+//     int val = (int) sqrt(num);
+//     if(num / val == 1)
+//         return true;
+//     return false;
+// }
 
 // Corrected:
 bool is_smart_number(int num) {
