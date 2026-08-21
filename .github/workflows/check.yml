@@ -38,7 +38,7 @@ jobs:
             }
           }
           while IFS= read -r src; do check g++ -std=c++17 "$src"; done \
-            < <(find CodeForces HackerRank -name '*.cpp')
+            < <(find CodeForces HackerRank templates -name '*.cpp')
           while IFS= read -r src; do check gcc -std=c11 "$src"; done \
             < <(find CodeForces HackerRank -name '*.c')
           exit $fail
