@@ -93,7 +93,7 @@ folders, solutions that went missing, filenames left behind by a copy, and
 Cyrillic lookalike characters pasted in from a problem title, which quietly make
 a problem impossible to find by search. Both scripts run in CI on every push.
 
-## License
+## Attribution
 
-The solutions are MIT licensed. The statement screenshots belong to the
-platforms they came from and are included for reference only.
+The statement screenshots belong to Codeforces, HackerRank and LeetCode
+respectively, and are stored here for reference only.
