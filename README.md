@@ -1,12 +1,10 @@
 # Competitive programming
 
-Solutions to problems from Codeforces, LeetCode and HackerRank, written mostly in
-C++. Every problem folder holds the code and a screenshot of the statement it
-answers, so a solution can be read without opening the original site and without
-depending on a problem staying online.
+Solved problems from Codeforces, LeetCode and HackerRank, mostly in C++. Each
+folder holds the solution and a screenshot of the statement, so it reads without
+the original site and survives a problem going offline.
 
-This is a practice log, not a library. Nothing here is meant to be imported into
-another project.
+A practice log, not a library.
 
 <!-- BEGIN GENERATED: STATS -->
 ![Problems](https://img.shields.io/badge/problems-393-555) ![CodeForces](https://img.shields.io/badge/CodeForces-238-1f8acb) ![HackerRank](https://img.shields.io/badge/HackerRank-77-2ec866) ![LeetCode](https://img.shields.io/badge/LeetCode-78-ffa116)
@@ -42,45 +40,45 @@ Problems solved per month
 ```
 <!-- END GENERATED: STATS -->
 
+## Templates
+
+[`templates/`](templates/README.md) has a starting file per platform, plus a
+Codeforces toolkit with DSU, Fenwick, segment tree, sparse table, sieve, modular
+arithmetic, Z-function and Dijkstra. It also separates the speed tricks that work
+from the ones that are folklore.
+
 ## Layout
 
 ```
 <Platform>/problems/<Problem title>/
     code.cpp      the solution
-    image.png     screenshot of the problem statement
+    image.png     screenshot of the statement
 ```
 
-CodeForces solutions are named `forces.cpp` rather than `code.cpp`. That is a
-leftover from when this repository only held Codeforces problems, and renaming
-230 files would bury the history of when each one was actually solved.
+CodeForces uses `forces.cpp`, not `code.cpp`, from when this held only
+Codeforces problems. Renaming 230 files would bury the per-problem dates the
+index reads out of git.
 
-A few problems keep more than one solution, named `forcesv1.cpp`, `forcesv2.cpp`
-or `forces-optimized.cpp`. Those are the ones where a first attempt passed but
-was worth rewriting, and both versions are kept on purpose. Two problems keep a
-second statement page as `image-2.png`.
+Some problems keep two solutions (`forcesv1.cpp`, `forcesv2.cpp`,
+`forces-optimized.cpp`) where the first attempt passed but was worth rewriting.
+Two keep a second statement page as `image-2.png`.
 
 ## Running a solution
-
-Codeforces and HackerRank solutions read stdin and write stdout, so they compile
-and run on their own:
 
 ```
 g++ -std=c++17 -O2 -o solution "CodeForces/problems/Bit++/forces.cpp"
 ./solution < input.txt
 ```
 
-LeetCode solutions are `Solution` class bodies compiled against the site's own
-harness, so they do not build standalone. Three of them are SQL or Bash instead
-of C++.
+LeetCode solutions are `Solution` class bodies built against the site's harness
+and do not compile standalone. Three are SQL or Bash.
 
-## Why the folders are not sorted by topic
+## Why the tree is flat
 
-Filing 393 folders under `graphs/`, `dp/`, `greedy/` and so on means renaming
-paths every time a problem turns out to fit somewhere else, and every rename
-breaks whatever linked to it. The tree stays flat and `tools/build_index.py`
-derives the tables instead, reading the directory listing for the problem set and
-git history for the date each one was first solved. Adding a problem is still
-just committing a folder.
+Filing 393 folders under `graphs/`, `dp/` and so on means renaming paths every
+time a problem fits somewhere else, and every rename breaks the links.
+`tools/build_index.py` derives the tables instead, from the directory listing and
+from git history for the solve dates. Adding a problem stays a single commit.
 
 ```
 python tools/build_index.py           rewrite the generated files
@@ -88,12 +86,12 @@ python tools/build_index.py --check   fail if they are stale
 python tools/check_repo.py            verify the layout
 ```
 
-`check_repo.py` is there because this drifted once already. It catches empty
-folders, solutions that went missing, filenames left behind by a copy, and
-Cyrillic lookalike characters pasted in from a problem title, which quietly make
-a problem impossible to find by search. Both scripts run in CI on every push.
+`check_repo.py` exists because this drifted once: empty folders, filenames left
+behind by a copy, and a Cyrillic lookalike pasted in from a problem title that
+made it unsearchable. Both run in CI, alongside a compile sweep of every
+standalone solution.
 
 ## Attribution
 
-The statement screenshots belong to Codeforces, HackerRank and LeetCode
-respectively, and are stored here for reference only.
+Statement screenshots belong to Codeforces, HackerRank and LeetCode, and are
+stored for reference.
