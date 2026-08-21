@@ -7,8 +7,10 @@
 | [`hackerrank.cpp`](hackerrank.cpp) | HackerRank, which hands you a function signature rather than stdin. |
 | [`leetcode.cpp`](leetcode.cpp) | LeetCode, which links a class against its own driver. |
 
-Copy the file into the problem, delete the sections you do not need. The
-toolkit is written so that deleting a block never breaks the ones above it.
+Copy the file into the problem, delete the sections you do not need. In the
+toolkit every section is independent, so deleting one leaves the rest working.
+The two exceptions: they all use the aliases and macros at the top, and the
+hash containers need `custom_hash`.
 
 ## What actually matters
 
@@ -35,8 +37,9 @@ Everything past this point is a smaller effect than any of those three.
 | `ordered_set` | O(log n) | `order_of_key`, `find_by_order`, which `std::set` lacks |
 | `fast_map` | ~3x insert | `gp_hash_table`, open addressed |
 
-`SegTree` and `SparseTable` hardcode their merge. Change `merge` and `id`
-together or the identity stops being an identity.
+`SegTree` and `SparseTable` hardcode their merge: change `merge` at the top of
+the struct. `SegTree` also has an `id`, which must stay the identity of whatever
+`merge` you put in, or empty ranges return the wrong answer.
 
 ## Codeforces judge
 
