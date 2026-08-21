@@ -1,13 +1,14 @@
 // Codeforces toolkit. Copy, keep the sections you need, delete the rest.
 // Every structure here is O(n log n) or better and drops in unmodified.
 
-// Pragmas must precede every #include, or libstdc++ compiles for a different
-// target than your code and you get "inlining failed in call to always_inline"
-// out of allocator.h. O3 not Ofast: Ofast implies -ffast-math, which fails to
-// compile with avx2 on GCC 13/14 and silently changes sqrt results. avx2 is a
-// bet on judge hardware; Codeforces has it, some judges crash on it.
+// Must precede every #include. The judge compiles at -O2, so this is the only
+// way to get O3.
+//
+// target("avx2") is deliberately absent. On GCC 13 and 14 it fails to compile
+// against any libstdc++ container, and Codeforces runs 14.2, so it is a
+// Compilation Error rather than a speedup. Ordering the pragmas differently
+// does not help. See templates/README.md.
 #pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>

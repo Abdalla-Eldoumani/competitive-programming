@@ -45,24 +45,28 @@ g++ -Wall -Wextra -Wconversion -static -DONLINE_JUDGE
     -Wl,--stack=268435456 -O2 -std=c++23 program.cpp -lstdc++exp
 ```
 
-`-O2` and no `-march`, so pragmas are the only way to get more. 256 MB of
-stack, so deep recursion is safe and the old "run main on a manual thread"
-workaround is dead weight.
+`-O2` and no `-march`, so `#pragma GCC optimize("O3,unroll-loops")` above the
+includes is the only way to get more. That one works. 256 MB of stack means deep
+recursion is safe and the old "run main on a manual thread" workaround is dead
+weight.
 
-Three ways the pragmas go wrong:
+The rest of the usual pragma folklore does not survive contact with this judge:
 
-- **Below an `#include`.** They only cover what follows, so libstdc++ compiles
-  for a different target than your code. That mismatch is the
-  `inlining failed in call to always_inline` error out of `allocator.h`.
-- **`Ofast`.** It implies `-ffast-math`, which fails to compile with `avx2` on
-  GCC 13 and 14. Codeforces runs 14.2. It also contracts `sqrt` into `fma` and
-  changes results, so it surfaces as a wrong answer, not a crash. Use `O3`.
-- **`optimization`.** The pragma is `optimize`. The misspelling is silently
-  ignored, which is why it has survived in copied templates for years.
+- **`target("avx2")` does not compile.** On GCC 13 and 14 it fails against any
+  libstdc++ container with `inlining failed in call to always_inline ... target
+  specific option mismatch` out of `allocator.h`. Codeforces runs 14.2, so a
+  template carrying that line gets a Compilation Error rather than a speedup.
+  Moving it above the includes or before `optimize` does not help; only the
+  `-mavx2` command-line flag does, and you cannot pass flags to a judge. Fixed
+  in GCC 15. This is why the toolkit has no `target` pragma.
+- **`Ofast` is not a better `O3`.** It implies `-ffast-math`, which contracts
+  `sqrt` into `fma` and changes results, so it surfaces as a wrong answer
+  rather than a crash.
+- **`optimization` is not the pragma.** It is `optimize`. The misspelling is
+  silently ignored, which is why it has survived in copied templates for years
+  doing nothing.
 
-`avx2` is a bet on judge hardware. Codeforces has it; some judges raise an
-illegal instruction instead. Strip that line before reusing the template
-elsewhere.
+Checked against g++ 14.2.0 with the judge's own flags, not from memory.
 
 ## Anti-hack hashing
 
