@@ -12,7 +12,13 @@ import os
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PLATFORMS = ["CodeForces", "HackerRank", "LeetCode"]
+
+# Any top-level directory with a problems/ inside it, so adding a platform
+# needs no code change here.
+PLATFORMS = sorted(
+    name for name in os.listdir(REPO)
+    if os.path.isdir(os.path.join(REPO, name, "problems"))
+)
 
 KNOWN_SOURCE = {".cpp", ".c", ".sql", ".sh", ".py", ".js", ".rs", ".java"}
 KNOWN_IMAGE = {".png", ".jpg", ".jpeg", ".gif", ".webp"}
@@ -23,12 +29,12 @@ def main() -> int:
     without_statement: list[str] = []
     total = 0
 
+    if not PLATFORMS:
+        print("no platform directories found; expected <Platform>/problems/")
+        return 1
+
     for platform in PLATFORMS:
         base = os.path.join(REPO, platform, "problems")
-        if not os.path.isdir(base):
-            errors.append(f"{platform}: missing problems/ directory")
-            continue
-
         for name in sorted(os.listdir(base)):
             full = os.path.join(base, name)
             if not os.path.isdir(full):

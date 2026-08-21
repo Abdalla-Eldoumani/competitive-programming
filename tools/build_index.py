@@ -18,7 +18,18 @@ import sys
 import urllib.parse
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PLATFORMS = ["CodeForces", "HackerRank", "LeetCode"]
+
+
+def platforms() -> list[str]:
+    """Any top-level directory with a problems/ inside it. Discovered rather
+    than listed so that adding a platform needs no code change."""
+    return sorted(
+        name for name in os.listdir(REPO)
+        if os.path.isdir(os.path.join(REPO, name, "problems"))
+    )
+
+
+PLATFORMS = platforms()
 
 LANGUAGES = {
     ".cpp": "C++",
@@ -37,7 +48,9 @@ BEGIN = "<!-- BEGIN GENERATED: {} -->"
 END = "<!-- END GENERATED: {} -->"
 
 # Each platform's own brand colour, so the badge row is scannable at a glance.
+# A platform added later just gets the neutral grey.
 BADGE_COLOURS = {"CodeForces": "1f8acb", "LeetCode": "ffa116", "HackerRank": "2ec866"}
+DEFAULT_COLOUR = "555"
 
 
 class Problem:
@@ -188,8 +201,9 @@ def stats_block(problems: list[Problem]) -> str:
     badges = [f"![Problems](https://img.shields.io/badge/problems-{total}-555)"]
     for platform in PLATFORMS:
         count = by_platform.get(platform, 0)
+        colour = BADGE_COLOURS.get(platform, DEFAULT_COLOUR)
         badges.append(
-            f"![{platform}](https://img.shields.io/badge/{platform}-{count}-{BADGE_COLOURS[platform]})"
+            f"![{platform}](https://img.shields.io/badge/{platform}-{count}-{colour})"
         )
 
     lines = [
