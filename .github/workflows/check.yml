@@ -25,28 +25,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # LeetCode solutions are class bodies that only build against the site's
-      # own harness, so only the two stdin/stdout platforms are compiled here.
-      #
-      # Solutions are syntax-checked, which is proportionate for 320 files of
-      # plain code. Templates get a real -c compile: pragma failures surface
-      # during inlining, and -fsyntax-only does not run that pass, so a template
-      # that cannot possibly build on the judge would otherwise pass here.
       - name: Compile every standalone solution
         run: |
-          fail=0
-          run() {
-            src="$1"; shift
-            "$@" "$src" 2>/tmp/err || {
-              echo "::error file=$src::does not compile"
-              sed 's/^/    /' /tmp/err
-              fail=1
-            }
+          # 316 of the 320 solutions open with <bits/stdc++.h>, and parsing it
+          # is essentially the whole cost of this job. Precompiling it once
+          # takes about six seconds and cuts each file from ~1.3s to ~0.4s.
+          # With that plus one job per core this runs in well under a minute
+          # instead of five.
+          export PCH
+          PCH=$(mktemp -d)
+          header=$(echo '#include <bits/stdc++.h>' | g++ -std=c++17 -E -x c++ - \
+                   | grep -m1 -o '/usr/include[^"]*bits/stdc++\.h')
+          mkdir -p "$PCH/bits"
+          cp "$header" "$PCH/bits/"
+          g++ -std=c++17 -x c++-header "$PCH/bits/stdc++.h" -o "$PCH/bits/stdc++.h.gch"
+
+          compile() {
+            local out
+            if ! out=$("$@" 2>&1); then
+              printf '::error file=%s::does not compile\n%s\n' "${!#}" "$out"
+              return 1
+            fi
           }
-          while IFS= read -r src; do run "$src" g++ -std=c++17 -fsyntax-only; done \
-            < <(find CodeForces HackerRank -name '*.cpp')
-          while IFS= read -r src; do run "$src" gcc -std=c11 -fsyntax-only; done \
-            < <(find CodeForces HackerRank -name '*.c')
-          while IFS= read -r src; do run "$src" g++ -std=c++17 -O2 -c -o /dev/null; done \
-            < <(find templates -name '*.cpp')
+          export -f compile
+
+          fail=0
+          # LeetCode solutions are class bodies that only build against the
+          # site's own harness, so they are not swept.
+          find CodeForces HackerRank -name '*.cpp' -print0 | xargs -0 -P "$(nproc)" -I{} \
+            bash -c 'compile g++ -std=c++17 -I "$PCH" -fsyntax-only "$1"' _ {} || fail=1
+          find CodeForces HackerRank -name '*.c' -print0 | xargs -0 -P "$(nproc)" -I{} \
+            bash -c 'compile gcc -std=c11 -fsyntax-only "$1"' _ {} || fail=1
+          # Templates get a real -c compile: pragma errors surface during
+          # inlining, which -fsyntax-only skips entirely. No PCH here, the
+          # pragmas would invalidate it.
+          find templates -name '*.cpp' -print0 | xargs -0 -P "$(nproc)" -I{} \
+            bash -c 'compile g++ -std=c++17 -O2 -c -o /dev/null "$1"' _ {} || fail=1
+
           exit $fail
