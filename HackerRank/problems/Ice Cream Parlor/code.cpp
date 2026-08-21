@@ -30,9 +30,10 @@ vector<int> icecreamParlor(int m, vector<int> arr) {
     return result;
 }
 
+// The first attempt, kept for comparison. main() calls the hash map version above.
 // O(n^2) time complexity
 // O(1) space complexity
-vector<int> icecreamParlor(int m, vector<int> arr) {
+vector<int> icecreamParlorBruteForce(int m, vector<int> arr) {
     vector<int> result;
     for (int i = 0; i < arr.size(); i++) {
         for (int j = i + 1; j < arr.size(); j++) {
