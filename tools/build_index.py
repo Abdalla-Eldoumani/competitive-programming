@@ -1,13 +1,10 @@
 """Regenerate the README stats block and the per-platform problem indexes.
 
-Everything here is derived from the repository itself: the directory tree gives
-the problem list, file extensions give the language, and git history gives the
-date each problem was first solved. Nothing needs to be recorded by hand, so
-adding a problem is still just "drop a folder in and commit".
+Everything is derived: the tree gives the problem list, extensions give the
+language, git history gives the solve dates. Nothing is recorded by hand.
 
-Usage:
     python tools/build_index.py           rewrite the generated files
-    python tools/build_index.py --check   fail if they are out of date (CI)
+    python tools/build_index.py --check   fail if they are stale (CI)
 """
 
 from __future__ import annotations

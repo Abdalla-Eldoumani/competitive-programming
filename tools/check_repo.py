@@ -1,13 +1,9 @@
 """Check that every problem folder follows the repository layout.
 
-The conventions are deliberately loose: a problem is a folder with at least one
-source file in it. What this catches is the drift that accumulates silently over
-hundreds of commits -- empty folders left behind, filenames that never got
-renamed after a copy, and Cyrillic lookalike characters pasted in from a problem
-title, which make a problem impossible to find by search.
-
-Usage:
-    python tools/check_repo.py
+A problem is a folder with at least one source file. This catches the drift that
+accumulates silently over hundreds of commits: empty folders, filenames left
+behind by a copy, and Cyrillic lookalikes pasted in from a problem title that
+make a problem unsearchable.
 """
 
 from __future__ import annotations
