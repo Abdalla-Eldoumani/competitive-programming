@@ -1,0 +1,44 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # build_index.py reads the full history to date each problem.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check problem layout
+        run: python tools/check_repo.py
+      - name: Check the index is up to date
+        run: python tools/build_index.py --check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # LeetCode solutions are class bodies that only build against the site's
+      # own harness, so only the two stdin/stdout platforms are compiled here.
+      - name: Compile every standalone solution
+        run: |
+          fail=0
+          check() {
+            "$1" "$2" -fsyntax-only "$3" 2>/tmp/err || {
+              echo "::error file=$3::does not compile"
+              sed 's/^/    /' /tmp/err
+              fail=1
+            }
+          }
+          while IFS= read -r src; do check g++ -std=c++17 "$src"; done \
+            < <(find CodeForces HackerRank -name '*.cpp')
+          while IFS= read -r src; do check gcc -std=c11 "$src"; done \
+            < <(find CodeForces HackerRank -name '*.c')
+          exit $fail
