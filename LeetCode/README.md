@@ -20,7 +20,7 @@ problem statement, so the repository reads on its own without visiting the site.
 | 13 | [Check If Any Element Has Prime Frequency](problems/Check%20If%20Any%20Element%20Has%20Prime%20Frequency) | [`code.cpp`](problems/Check%20If%20Any%20Element%20Has%20Prime%20Frequency/code.cpp) | C++ | 2025-08-09 |
 | 14 | [Check Whether Two Strings are Almost Equivalent](problems/Check%20Whether%20Two%20Strings%20are%20Almost%20Equivalent) | [`code.cpp`](problems/Check%20Whether%20Two%20Strings%20are%20Almost%20Equivalent/code.cpp) | C++ | 2026-02-26 |
 | 15 | [Construct the Rectangle](problems/Construct%20the%20Rectangle) | [`code.cpp`](problems/Construct%20the%20Rectangle/code.cpp) | C++ | 2025-09-20 |
-| 16 | [Contains Duplicate](problems/Contains%20Duplicate) | [`code.cpp`](problems/Contains%20Duplicate/code.cpp) | C++ | - |
+| 16 | [Contains Duplicate](problems/Contains%20Duplicate) | [`code.cpp`](problems/Contains%20Duplicate/code.cpp) | C++ | 2026-08-24 |
 | 17 | [Convert Date to Binary](problems/Convert%20Date%20to%20Binary) | [`code.cpp`](problems/Convert%20Date%20to%20Binary/code.cpp) | C++ | 2026-01-21 |
 | 18 | [Count Complete Tree Nodes](problems/Count%20Complete%20Tree%20Nodes) | [`code.cpp`](problems/Count%20Complete%20Tree%20Nodes/code.cpp) | C++ | 2025-08-22 |
 | 19 | [Count Good Triplets](problems/Count%20Good%20Triplets) | [`code.cpp`](problems/Count%20Good%20Triplets/code.cpp) | C++ | 2026-02-23 |
