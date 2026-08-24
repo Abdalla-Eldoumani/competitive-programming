@@ -7,18 +7,18 @@ the original site and survives a problem going offline.
 A practice log, not a library.
 
 <!-- BEGIN GENERATED: STATS -->
-![Problems](https://img.shields.io/badge/problems-395-555) ![CodeForces](https://img.shields.io/badge/CodeForces-238-1f8acb) ![HackerRank](https://img.shields.io/badge/HackerRank-77-2ec866) ![LeetCode](https://img.shields.io/badge/LeetCode-80-ffa116)
+![Problems](https://img.shields.io/badge/problems-396-555) ![CodeForces](https://img.shields.io/badge/CodeForces-238-1f8acb) ![HackerRank](https://img.shields.io/badge/HackerRank-77-2ec866) ![LeetCode](https://img.shields.io/badge/LeetCode-81-ffa116)
 
 | Platform | Solved | Index |
 |:---------|-------:|:------|
 | CodeForces | 238 | [browse](CodeForces/README.md) |
 | HackerRank | 77 | [browse](HackerRank/README.md) |
-| LeetCode | 80 | [browse](LeetCode/README.md) |
-| **Total** | **395** | |
+| LeetCode | 81 | [browse](LeetCode/README.md) |
+| **Total** | **396** | |
 
-Languages: C++ (392), C (5), SQL (2), Bash (1)
+Languages: C++ (393), C (5), SQL (2), Bash (1)
 
-Span: 2025-07-11 to 2026-08-24. 12,077 lines of solution code.
+Span: 2025-07-11 to 2026-08-24. 12,142 lines of solution code.
 
 ```
 Problems solved per month

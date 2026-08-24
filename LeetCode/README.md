@@ -1,6 +1,6 @@
 # LeetCode
 
-80 solved. Each folder holds the solution and a screenshot of the
+81 solved. Each folder holds the solution and a screenshot of the
 problem statement, so the repository reads on its own without visiting the site.
 
 | # | Problem | Solution | Language | Solved |
@@ -82,6 +82,7 @@ problem statement, so the repository reads on its own without visiting the site.
 | 75 | [Third Maximum Number](problems/Third%20Maximum%20Number) | [`code.cpp`](problems/Third%20Maximum%20Number/code.cpp) | C++ | 2025-09-03 |
 | 76 | [Three Consecutive Odds](problems/Three%20Consecutive%20Odds) | [`code.cpp`](problems/Three%20Consecutive%20Odds/code.cpp) | C++ | 2026-01-07 |
 | 77 | [To Lower Case](problems/To%20Lower%20Case) | [`code.cpp`](problems/To%20Lower%20Case/code.cpp) | C++ | 2025-11-20 |
-| 78 | [Truncate Sentence](problems/Truncate%20Sentence) | [`code.cpp`](problems/Truncate%20Sentence/code.cpp) | C++ | 2026-02-15 |
-| 79 | [Valid Parentheses](problems/Valid%20Parentheses) | [`code.cpp`](problems/Valid%20Parentheses/code.cpp) | C++ | 2025-12-04 |
-| 80 | [Valid Phone Numbers](problems/Valid%20Phone%20Numbers) | [`code.sh`](problems/Valid%20Phone%20Numbers/code.sh) | Bash | 2025-08-19 |
+| 78 | [Top K Frequent Elements](problems/Top%20K%20Frequent%20Elements) | [`code.cpp`](problems/Top%20K%20Frequent%20Elements/code.cpp) | C++ | - |
+| 79 | [Truncate Sentence](problems/Truncate%20Sentence) | [`code.cpp`](problems/Truncate%20Sentence/code.cpp) | C++ | 2026-02-15 |
+| 80 | [Valid Parentheses](problems/Valid%20Parentheses) | [`code.cpp`](problems/Valid%20Parentheses/code.cpp) | C++ | 2025-12-04 |
+| 81 | [Valid Phone Numbers](problems/Valid%20Phone%20Numbers) | [`code.sh`](problems/Valid%20Phone%20Numbers/code.sh) | Bash | 2025-08-19 |
