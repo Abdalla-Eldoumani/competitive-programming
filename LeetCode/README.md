@@ -1,6 +1,6 @@
 # LeetCode
 
-81 solved. Each folder holds the solution and a screenshot of the
+82 solved. Each folder holds the solution and a screenshot of the
 problem statement, so the repository reads on its own without visiting the site.
 
 | # | Problem | Solution | Language | Solved |
@@ -60,29 +60,30 @@ problem statement, so the repository reads on its own without visiting the site.
 | 53 | [Partition List](problems/Partition%20List) | [`code.cpp`](problems/Partition%20List/code.cpp) | C++ | 2025-10-23 |
 | 54 | [Pascal's Triangle](problems/Pascal%27s%20Triangle) | [`code.cpp`](problems/Pascal%27s%20Triangle/code.cpp) | C++ | 2025-08-14 |
 | 55 | [Perfect Number](problems/Perfect%20Number) | [`code.cpp`](problems/Perfect%20Number/code.cpp) | C++ | 2025-10-08 |
-| 56 | [Product Sales Analysis I](problems/Product%20Sales%20Analysis%20I) | [`code.sql`](problems/Product%20Sales%20Analysis%20I/code.sql) | SQL | 2025-12-25 |
-| 57 | [Relative Ranks](problems/Relative%20Ranks) | [`code.cpp`](problems/Relative%20Ranks/code.cpp) | C++ | 2025-10-05 |
-| 58 | [Reverse String II](problems/Reverse%20String%20II) | [`code.cpp`](problems/Reverse%20String%20II/code.cpp) | C++ | 2025-10-27 |
-| 59 | [Reverse Words in a String III](problems/Reverse%20Words%20in%20a%20String%20III) | [`code.cpp`](problems/Reverse%20Words%20in%20a%20String%20III/code.cpp) | C++ | 2025-11-07 |
-| 60 | [Search a 2D Matrix](problems/Search%20a%202D%20Matrix) | [`code.cpp`](problems/Search%20a%202D%20Matrix/code.cpp) | C++ | 2025-08-04 |
-| 61 | [Search in a Binary Search Tree](problems/Search%20in%20a%20Binary%20Search%20Tree) | [`code.cpp`](problems/Search%20in%20a%20Binary%20Search%20Tree/code.cpp) | C++ | 2025-11-25 |
-| 62 | [Separate Black and White Balls](problems/Separate%20Black%20and%20White%20Balls) | [`code.cpp`](problems/Separate%20Black%20and%20White%20Balls/code.cpp) | C++ | 2025-08-11 |
-| 63 | [Set Mismatch](problems/Set%20Mismatch) | [`code.cpp`](problems/Set%20Mismatch/code.cpp) | C++ | 2025-11-10 |
-| 64 | [Slowest Key](problems/Slowest%20Key) | [`code.cpp`](problems/Slowest%20Key/code.cpp) | C++ | 2026-01-24 |
-| 65 | [Sort the People](problems/Sort%20the%20People) | [`code.cpp`](problems/Sort%20the%20People/code.cpp) | C++ | 2025-08-07 |
-| 66 | [Sqrt(x)](problems/Sqrt%28x%29) | [`code.cpp`](problems/Sqrt%28x%29/code.cpp) | C++ | 2025-12-01 |
-| 67 | [Student Attendance Record I](problems/Student%20Attendance%20Record%20I) | [`code.cpp`](problems/Student%20Attendance%20Record%20I/code.cpp) | C++ | 2025-11-04 |
-| 68 | [Substrings of Size Three with Distinct Characters](problems/Substrings%20of%20Size%20Three%20with%20Distinct%20Characters) | [`code.cpp`](problems/Substrings%20of%20Size%20Three%20with%20Distinct%20Characters/code.cpp) | C++ | 2025-12-13 |
-| 69 | [Subtract the Product and Sum of Digits of an Integer](problems/Subtract%20the%20Product%20and%20Sum%20of%20Digits%20of%20an%20Integer) | [`code.cpp`](problems/Subtract%20the%20Product%20and%20Sum%20of%20Digits%20of%20an%20Integer/code.cpp) | C++ | 2025-12-10 |
-| 70 | [Sum Multiples](problems/Sum%20Multiples) | [`code.cpp`](problems/Sum%20Multiples/code.cpp) | C++ | 2025-12-19 |
-| 71 | [Sum of Left Leaves](problems/Sum%20of%20Left%20Leaves) | [`code.cpp`](problems/Sum%20of%20Left%20Leaves/code.cpp) | C++ | 2025-08-27 |
-| 72 | [Sum of Root To Leaf Binary Numbers](problems/Sum%20of%20Root%20To%20Leaf%20Binary%20Numbers) | [`code.cpp`](problems/Sum%20of%20Root%20To%20Leaf%20Binary%20Numbers/code.cpp) | C++ | 2026-02-11 |
-| 73 | [Teemo Attacking](problems/Teemo%20Attacking) | [`code.cpp`](problems/Teemo%20Attacking/code.cpp) | C++ | 2025-09-23 |
-| 74 | [The Number of Full Rounds You Have Played](problems/The%20Number%20of%20Full%20Rounds%20You%20Have%20Played) | [`code.cpp`](problems/The%20Number%20of%20Full%20Rounds%20You%20Have%20Played/code.cpp) | C++ | 2026-01-10 |
-| 75 | [Third Maximum Number](problems/Third%20Maximum%20Number) | [`code.cpp`](problems/Third%20Maximum%20Number/code.cpp) | C++ | 2025-09-03 |
-| 76 | [Three Consecutive Odds](problems/Three%20Consecutive%20Odds) | [`code.cpp`](problems/Three%20Consecutive%20Odds/code.cpp) | C++ | 2026-01-07 |
-| 77 | [To Lower Case](problems/To%20Lower%20Case) | [`code.cpp`](problems/To%20Lower%20Case/code.cpp) | C++ | 2025-11-20 |
-| 78 | [Top K Frequent Elements](problems/Top%20K%20Frequent%20Elements) | [`code.cpp`](problems/Top%20K%20Frequent%20Elements/code.cpp) | C++ | 2026-08-24 |
-| 79 | [Truncate Sentence](problems/Truncate%20Sentence) | [`code.cpp`](problems/Truncate%20Sentence/code.cpp) | C++ | 2026-02-15 |
-| 80 | [Valid Parentheses](problems/Valid%20Parentheses) | [`code.cpp`](problems/Valid%20Parentheses/code.cpp) | C++ | 2025-12-04 |
-| 81 | [Valid Phone Numbers](problems/Valid%20Phone%20Numbers) | [`code.sh`](problems/Valid%20Phone%20Numbers/code.sh) | Bash | 2025-08-19 |
+| 56 | [Product of Array Except Self](problems/Product%20of%20Array%20Except%20Self) | [`code.cpp`](problems/Product%20of%20Array%20Except%20Self/code.cpp) | C++ | 2026-08-25 |
+| 57 | [Product Sales Analysis I](problems/Product%20Sales%20Analysis%20I) | [`code.sql`](problems/Product%20Sales%20Analysis%20I/code.sql) | SQL | 2025-12-25 |
+| 58 | [Relative Ranks](problems/Relative%20Ranks) | [`code.cpp`](problems/Relative%20Ranks/code.cpp) | C++ | 2025-10-05 |
+| 59 | [Reverse String II](problems/Reverse%20String%20II) | [`code.cpp`](problems/Reverse%20String%20II/code.cpp) | C++ | 2025-10-27 |
+| 60 | [Reverse Words in a String III](problems/Reverse%20Words%20in%20a%20String%20III) | [`code.cpp`](problems/Reverse%20Words%20in%20a%20String%20III/code.cpp) | C++ | 2025-11-07 |
+| 61 | [Search a 2D Matrix](problems/Search%20a%202D%20Matrix) | [`code.cpp`](problems/Search%20a%202D%20Matrix/code.cpp) | C++ | 2025-08-04 |
+| 62 | [Search in a Binary Search Tree](problems/Search%20in%20a%20Binary%20Search%20Tree) | [`code.cpp`](problems/Search%20in%20a%20Binary%20Search%20Tree/code.cpp) | C++ | 2025-11-25 |
+| 63 | [Separate Black and White Balls](problems/Separate%20Black%20and%20White%20Balls) | [`code.cpp`](problems/Separate%20Black%20and%20White%20Balls/code.cpp) | C++ | 2025-08-11 |
+| 64 | [Set Mismatch](problems/Set%20Mismatch) | [`code.cpp`](problems/Set%20Mismatch/code.cpp) | C++ | 2025-11-10 |
+| 65 | [Slowest Key](problems/Slowest%20Key) | [`code.cpp`](problems/Slowest%20Key/code.cpp) | C++ | 2026-01-24 |
+| 66 | [Sort the People](problems/Sort%20the%20People) | [`code.cpp`](problems/Sort%20the%20People/code.cpp) | C++ | 2025-08-07 |
+| 67 | [Sqrt(x)](problems/Sqrt%28x%29) | [`code.cpp`](problems/Sqrt%28x%29/code.cpp) | C++ | 2025-12-01 |
+| 68 | [Student Attendance Record I](problems/Student%20Attendance%20Record%20I) | [`code.cpp`](problems/Student%20Attendance%20Record%20I/code.cpp) | C++ | 2025-11-04 |
+| 69 | [Substrings of Size Three with Distinct Characters](problems/Substrings%20of%20Size%20Three%20with%20Distinct%20Characters) | [`code.cpp`](problems/Substrings%20of%20Size%20Three%20with%20Distinct%20Characters/code.cpp) | C++ | 2025-12-13 |
+| 70 | [Subtract the Product and Sum of Digits of an Integer](problems/Subtract%20the%20Product%20and%20Sum%20of%20Digits%20of%20an%20Integer) | [`code.cpp`](problems/Subtract%20the%20Product%20and%20Sum%20of%20Digits%20of%20an%20Integer/code.cpp) | C++ | 2025-12-10 |
+| 71 | [Sum Multiples](problems/Sum%20Multiples) | [`code.cpp`](problems/Sum%20Multiples/code.cpp) | C++ | 2025-12-19 |
+| 72 | [Sum of Left Leaves](problems/Sum%20of%20Left%20Leaves) | [`code.cpp`](problems/Sum%20of%20Left%20Leaves/code.cpp) | C++ | 2025-08-27 |
+| 73 | [Sum of Root To Leaf Binary Numbers](problems/Sum%20of%20Root%20To%20Leaf%20Binary%20Numbers) | [`code.cpp`](problems/Sum%20of%20Root%20To%20Leaf%20Binary%20Numbers/code.cpp) | C++ | 2026-02-11 |
+| 74 | [Teemo Attacking](problems/Teemo%20Attacking) | [`code.cpp`](problems/Teemo%20Attacking/code.cpp) | C++ | 2025-09-23 |
+| 75 | [The Number of Full Rounds You Have Played](problems/The%20Number%20of%20Full%20Rounds%20You%20Have%20Played) | [`code.cpp`](problems/The%20Number%20of%20Full%20Rounds%20You%20Have%20Played/code.cpp) | C++ | 2026-01-10 |
+| 76 | [Third Maximum Number](problems/Third%20Maximum%20Number) | [`code.cpp`](problems/Third%20Maximum%20Number/code.cpp) | C++ | 2025-09-03 |
+| 77 | [Three Consecutive Odds](problems/Three%20Consecutive%20Odds) | [`code.cpp`](problems/Three%20Consecutive%20Odds/code.cpp) | C++ | 2026-01-07 |
+| 78 | [To Lower Case](problems/To%20Lower%20Case) | [`code.cpp`](problems/To%20Lower%20Case/code.cpp) | C++ | 2025-11-20 |
+| 79 | [Top K Frequent Elements](problems/Top%20K%20Frequent%20Elements) | [`code.cpp`](problems/Top%20K%20Frequent%20Elements/code.cpp) | C++ | 2026-08-24 |
+| 80 | [Truncate Sentence](problems/Truncate%20Sentence) | [`code.cpp`](problems/Truncate%20Sentence/code.cpp) | C++ | 2026-02-15 |
+| 81 | [Valid Parentheses](problems/Valid%20Parentheses) | [`code.cpp`](problems/Valid%20Parentheses/code.cpp) | C++ | 2025-12-04 |
+| 82 | [Valid Phone Numbers](problems/Valid%20Phone%20Numbers) | [`code.sh`](problems/Valid%20Phone%20Numbers/code.sh) | Bash | 2025-08-19 |
