@@ -93,8 +93,13 @@ python tools/check_repo.py            verify the layout
 
 `check_repo.py` exists because this drifted once: empty folders, filenames left
 behind by a copy, and a Cyrillic lookalike pasted in from a problem title that
-made it unsearchable. Both run in CI, alongside a compile sweep of every
-standalone solution.
+made it unsearchable.
+
+Both run in CI, alongside a syntax check of every standalone solution. Each
+language gets its own checker, so a Python or Go solution is verified the same
+way a C++ one is. A file whose checker is missing, or that has no checker at
+all, is listed at the end of the job rather than failing it or being skipped
+quietly.
 
 ## Attribution
 
