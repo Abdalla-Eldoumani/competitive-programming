@@ -17,32 +17,10 @@ import subprocess
 import sys
 import urllib.parse
 
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import repo
 
-
-def platforms() -> list[str]:
-    """Any top-level directory with a problems/ inside it. Discovered rather
-    than listed so that adding a platform needs no code change."""
-    return sorted(
-        name for name in os.listdir(REPO)
-        if os.path.isdir(os.path.join(REPO, name, "problems"))
-    )
-
-
-PLATFORMS = platforms()
-
-LANGUAGES = {
-    ".cpp": "C++",
-    ".c": "C",
-    ".sql": "SQL",
-    ".sh": "Bash",
-    ".py": "Python",
-    ".js": "JavaScript",
-    ".rs": "Rust",
-    ".java": "Java",
-}
-
-STATEMENT_SUFFIXES = (".png", ".jpg", ".jpeg", ".gif", ".webp")
+REPO = repo.REPO
+PLATFORMS = repo.platforms()
 
 BEGIN = "<!-- BEGIN GENERATED: {} -->"
 END = "<!-- END GENERATED: {} -->"
@@ -69,7 +47,7 @@ class Problem:
     def languages(self) -> list[str]:
         seen = []
         for src in self.sources:
-            lang = LANGUAGES.get(os.path.splitext(src)[1].lower(), "Other")
+            lang = repo.language(src)
             if lang not in seen:
                 seen.append(lang)
         return seen
@@ -94,8 +72,8 @@ def collect() -> list[Problem]:
             if not os.path.isdir(full):
                 continue
             files = sorted(os.listdir(full))
-            images = [f for f in files if f.lower().endswith(STATEMENT_SUFFIXES)]
-            sources = [f for f in files if f not in images]
+            images = [f for f in files if repo.kind(f) == "image"]
+            sources = [f for f in files if repo.kind(f) == "source"]
             if sources:
                 problems.append(Problem(platform, name, sources, images))
     return problems
