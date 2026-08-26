@@ -34,8 +34,12 @@ jobs:
           # 316 of the 320 C++ solutions open with <bits/stdc++.h>, and parsing
           # it is essentially the whole cost of this job. Precompiling it once
           # takes about six seconds and cuts each file from ~1.3s to ~0.4s.
-          header=$(echo '#include <bits/stdc++.h>' | g++ -std=c++17 -E -x c++ - \
-                   | grep -m1 -o '/usr/include[^"]*bits/stdc++\.h')
+          # Preprocess to a file rather than piping into grep: grep -m1 closes
+          # the pipe early, which makes g++ report a broken pipe as a fatal
+          # error and puts alarming noise in an otherwise green log.
+          echo '#include <bits/stdc++.h>' | g++ -std=c++17 -E -x c++ - -o "$PCH.ii"
+          header=$(grep -m1 -o '/usr/include[^"]*bits/stdc++\.h' "$PCH.ii")
+          rm -f "$PCH.ii"
           mkdir -p "$PCH/bits"
           cp "$header" "$PCH/bits/"
           g++ -std=c++17 -x c++-header "$PCH/bits/stdc++.h" -o "$PCH/bits/stdc++.h.gch"
