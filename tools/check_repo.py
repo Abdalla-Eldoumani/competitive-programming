@@ -4,6 +4,9 @@ A problem is a folder with at least one source file. This catches the drift that
 accumulates silently over hundreds of commits: empty folders, filenames left
 behind by a copy, and Cyrillic lookalikes pasted in from a problem title that
 make a problem unsearchable.
+
+A solution in a language not yet listed in repo.py is a notice, not an error.
+Adding a language should never be the thing that turns CI red.
 """
 
 from __future__ import annotations
@@ -11,22 +14,15 @@ from __future__ import annotations
 import os
 import sys
 
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import repo
 
-# Any top-level directory with a problems/ inside it, so adding a platform
-# needs no code change here.
-PLATFORMS = sorted(
-    name for name in os.listdir(REPO)
-    if os.path.isdir(os.path.join(REPO, name, "problems"))
-)
-
-KNOWN_SOURCE = {".cpp", ".c", ".sql", ".sh", ".py", ".js", ".rs", ".java"}
-KNOWN_IMAGE = {".png", ".jpg", ".jpeg", ".gif", ".webp"}
+PLATFORMS = repo.platforms()
 
 
 def main() -> int:
     errors: list[str] = []
     without_statement: list[str] = []
+    unlisted: list[str] = []
     total = 0
 
     if not PLATFORMS:
@@ -34,7 +30,7 @@ def main() -> int:
         return 1
 
     for platform in PLATFORMS:
-        base = os.path.join(REPO, platform, "problems")
+        base = os.path.join(repo.REPO, platform, "problems")
         for name in sorted(os.listdir(base)):
             full = os.path.join(base, name)
             if not os.path.isdir(full):
@@ -56,25 +52,29 @@ def main() -> int:
                 errors.append(f"{rel}: empty folder")
                 continue
 
-            sources = [f for f in files if os.path.splitext(f)[1].lower() in KNOWN_SOURCE]
-            images = [f for f in files if os.path.splitext(f)[1].lower() in KNOWN_IMAGE]
-            unknown = [f for f in files if f not in sources and f not in images]
+            sources, images = [], []
+            for f in files:
+                what = repo.kind(f)
+                if what == "junk":
+                    errors.append(f"{rel}/{f}: build output or OS clutter, should not be committed")
+                elif what == "image":
+                    images.append(f)
+                elif what == "source":
+                    sources.append(f)
+                    if os.path.splitext(f)[1].lower() not in repo.LANGUAGES:
+                        unlisted.append(f"{rel}/{f}")
+                if " " in f:
+                    errors.append(f"{rel}/{f}: filename contains a space")
 
             if not sources:
                 errors.append(f"{rel}: no solution file")
-            if unknown:
-                errors.append(f"{rel}: unrecognised file(s) {', '.join(unknown)}")
-            for f in files:
-                if " " in f:
-                    errors.append(f"{rel}/{f}: filename contains a space")
             if not images:
                 without_statement.append(rel)
 
     print(f"checked {total} problems across {len(PLATFORMS)} platforms")
-    if without_statement:
-        print(f"\n{len(without_statement)} without a statement screenshot (not an error):")
-        for rel in without_statement:
-            print(f"  {rel}")
+    _notice(without_statement, "without a statement screenshot")
+    _notice(unlisted, "in a language not yet listed in tools/repo.py, so named "
+                      "after the extension")
 
     if errors:
         print(f"\n{len(errors)} problem(s):")
@@ -84,6 +84,14 @@ def main() -> int:
 
     print("layout is consistent")
     return 0
+
+
+def _notice(items: list[str], what: str) -> None:
+    if not items:
+        return
+    print(f"\n{len(items)} {what} (not an error):")
+    for item in items:
+        print(f"  {item}")
 
 
 def _is_latin(char: str) -> bool:

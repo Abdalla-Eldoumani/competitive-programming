@@ -24,7 +24,7 @@ problem statement, so the repository reads on its own without visiting the site.
 | 17 | [Convert Date to Binary](problems/Convert%20Date%20to%20Binary) | [`code.cpp`](problems/Convert%20Date%20to%20Binary/code.cpp) | C++ | 2026-01-21 |
 | 18 | [Count Complete Tree Nodes](problems/Count%20Complete%20Tree%20Nodes) | [`code.cpp`](problems/Count%20Complete%20Tree%20Nodes/code.cpp) | C++ | 2025-08-22 |
 | 19 | [Count Good Triplets](problems/Count%20Good%20Triplets) | [`code.cpp`](problems/Count%20Good%20Triplets/code.cpp) | C++ | 2026-02-23 |
-| 20 | [Counter](problems/Counter) | [`code.ts`](problems/Counter/code.ts) | Other | 2026-08-26 |
+| 20 | [Counter](problems/Counter) | [`code.ts`](problems/Counter/code.ts) | TypeScript | 2026-08-26 |
 | 21 | [Detect Capital](problems/Detect%20Capital) | [`code.cpp`](problems/Detect%20Capital/code.cpp) | C++ | 2025-10-17 |
 | 22 | [Diameter of Binary Tree](problems/Diameter%20of%20Binary%20Tree) | [`code.cpp`](problems/Diameter%20of%20Binary%20Tree/code.cpp) | C++ | 2025-11-01 |
 | 23 | [Existence of a Substring in a String and Its Reverse](problems/Existence%20of%20a%20Substring%20in%20a%20String%20and%20Its%20Reverse) | [`code.cpp`](problems/Existence%20of%20a%20Substring%20in%20a%20String%20and%20Its%20Reverse/code.cpp) | C++ | 2026-01-16 |

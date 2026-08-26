@@ -16,7 +16,7 @@ A practice log, not a library.
 | LeetCode | 83 | [browse](LeetCode/README.md) |
 | **Total** | **398** | |
 
-Languages: C++ (394), C (5), SQL (2), Other (1), Bash (1)
+Languages: C++ (394), C (5), SQL (2), TypeScript (1), Bash (1)
 
 Span: 2025-07-11 to 2026-08-26. 12,175 lines of solution code.
 
@@ -71,7 +71,12 @@ g++ -std=c++17 -O2 -o solution "CodeForces/problems/Bit++/forces.cpp"
 ```
 
 LeetCode solutions are `Solution` class bodies built against the site's harness
-and do not compile standalone. Three are SQL or Bash.
+and do not compile standalone. A few are SQL, Bash or TypeScript instead of C++;
+the language column in each platform index says which.
+
+Adding a solution in a new language needs one line in `tools/repo.py`. Until
+that line exists the index names it after its file extension rather than
+"Other", and the layout check reports it without failing.
 
 ## Why the tree is flat
 
@@ -88,8 +93,13 @@ python tools/check_repo.py            verify the layout
 
 `check_repo.py` exists because this drifted once: empty folders, filenames left
 behind by a copy, and a Cyrillic lookalike pasted in from a problem title that
-made it unsearchable. Both run in CI, alongside a compile sweep of every
-standalone solution.
+made it unsearchable.
+
+Both run in CI, alongside a syntax check of every standalone solution. Each
+language gets its own checker, so a Python or Go solution is verified the same
+way a C++ one is. A file whose checker is missing, or that has no checker at
+all, is listed at the end of the job rather than failing it or being skipped
+quietly.
 
 ## Attribution
 

@@ -25,41 +25,83 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Compile every standalone solution
+      - name: Syntax-check every standalone solution
         run: |
-          # 316 of the 320 solutions open with <bits/stdc++.h>, and parsing it
-          # is essentially the whole cost of this job. Precompiling it once
-          # takes about six seconds and cuts each file from ~1.3s to ~0.4s.
-          # With that plus one job per core this runs in well under a minute
-          # instead of five.
-          export PCH
+          export PCH SKIPPED
           PCH=$(mktemp -d)
-          header=$(echo '#include <bits/stdc++.h>' | g++ -std=c++17 -E -x c++ - \
-                   | grep -m1 -o '/usr/include[^"]*bits/stdc++\.h')
+          SKIPPED=$(mktemp)
+
+          # 316 of the 320 C++ solutions open with <bits/stdc++.h>, and parsing
+          # it is essentially the whole cost of this job. Precompiling it once
+          # takes about six seconds and cuts each file from ~1.3s to ~0.4s.
+          # Preprocess to a file rather than piping into grep: grep -m1 closes
+          # the pipe early, which makes g++ report a broken pipe as a fatal
+          # error and puts alarming noise in an otherwise green log.
+          echo '#include <bits/stdc++.h>' | g++ -std=c++17 -E -x c++ - -o "$PCH.ii"
+          header=$(grep -m1 -o '/usr/include[^"]*bits/stdc++\.h' "$PCH.ii")
+          rm -f "$PCH.ii"
           mkdir -p "$PCH/bits"
           cp "$header" "$PCH/bits/"
           g++ -std=c++17 -x c++-header "$PCH/bits/stdc++.h" -o "$PCH/bits/stdc++.h.gch"
 
-          compile() {
-            local out
-            if ! out=$("$@" 2>&1); then
-              printf '::error file=%s::does not compile\n%s\n' "${!#}" "$out"
-              return 1
-            fi
+          # Every language the repository can hold gets its own check, so a
+          # Python or Rust solution is verified like a C++ one. A file whose
+          # checker is missing, or that has no checker at all, is recorded and
+          # printed at the end: never a failure, never a silent skip.
+          #
+          # TypeScript is deliberately absent. tsc type-checks rather than only
+          # parsing, so a solution importing readline without @types/node would
+          # fail for a reason that has nothing to do with the solution.
+          check() {
+            local src="$1" ext="${1##*.}" out rc=0
+            local -a cmd
+            case "${ext,,}" in
+              md|txt) return 0 ;;
+              cpp|cc|cxx) cmd=(g++ -std=c++17 -I "$PCH" -fsyntax-only) ;;
+              c)   cmd=(gcc -std=c11 -fsyntax-only) ;;
+              py)  cmd=(python3 -c 'import ast,sys; ast.parse(open(sys.argv[1]).read())') ;;
+              sh)  cmd=(bash -n) ;;
+              js)  cmd=(node --check) ;;
+              rb)  cmd=(ruby -c) ;;
+              php) cmd=(php -l) ;;
+              pl)  cmd=(perl -c) ;;
+              go)  cmd=(gofmt -e) ;;
+              rs)  cmd=(rustc --emit=metadata -o /dev/null) ;;
+              *)   printf '%s (no checker for .%s)\n' "$src" "$ext" >> "$SKIPPED"; return 0 ;;
+            esac
+            command -v "${cmd[0]}" >/dev/null 2>&1 \
+              || { printf '%s (%s not installed)\n' "$src" "${cmd[0]}" >> "$SKIPPED"; return 0; }
+            out=$("${cmd[@]}" "$src" 2>&1) || rc=$?
+            [ "$rc" -eq 0 ] && return 0
+            printf '::error file=%s::does not compile\n%s\n' "$src" "$out"
+            return 1
           }
-          export -f compile
+          export -f check
+
+          # Templates get a real -c compile rather than a syntax check: pragma
+          # errors surface during inlining, a pass -fsyntax-only never runs.
+          compile_template() {
+            local out rc=0
+            out=$(g++ -std=c++17 -O2 -c -o /dev/null "$1" 2>&1) || rc=$?
+            [ "$rc" -eq 0 ] && return 0
+            printf '::error file=%s::does not compile\n%s\n' "$1" "$out"
+            return 1
+          }
+          export -f compile_template
 
           fail=0
           # LeetCode solutions are class bodies that only build against the
-          # site's own harness, so they are not swept.
-          find CodeForces HackerRank -name '*.cpp' -print0 | xargs -0 -P "$(nproc)" -I{} \
-            bash -c 'compile g++ -std=c++17 -I "$PCH" -fsyntax-only "$1"' _ {} || fail=1
-          find CodeForces HackerRank -name '*.c' -print0 | xargs -0 -P "$(nproc)" -I{} \
-            bash -c 'compile gcc -std=c11 -fsyntax-only "$1"' _ {} || fail=1
-          # Templates get a real -c compile: pragma errors surface during
-          # inlining, which -fsyntax-only skips entirely. No PCH here, the
-          # pragmas would invalidate it.
-          find templates -name '*.cpp' -print0 | xargs -0 -P "$(nproc)" -I{} \
-            bash -c 'compile g++ -std=c++17 -O2 -c -o /dev/null "$1"' _ {} || fail=1
+          # site's own harness, so that platform is not swept.
+          find CodeForces HackerRank -type f \
+               ! -name '*.png' ! -name '*.jpg' ! -name '*.jpeg' \
+               ! -name '*.gif' ! -name '*.webp' -print0 \
+            | xargs -0 -P "$(nproc)" -I{} bash -c 'check "$1"' _ {} || fail=1
+          find templates -name '*.cpp' -print0 \
+            | xargs -0 -P "$(nproc)" -I{} bash -c 'compile_template "$1"' _ {} || fail=1
 
+          if [ -s "$SKIPPED" ]; then
+            echo
+            echo "not syntax-checked:"
+            sort -u "$SKIPPED" | sed 's/^/    /'
+          fi
           exit $fail
